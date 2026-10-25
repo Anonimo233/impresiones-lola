@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Impresiones Lola · Concepto A (Motion Edition)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --fondo: #FBFAF7;
+    --tinta: #141414;
+    --amarillo: #FFD21F;
+    --azul: #2D5BFF;
+    --naranja: #FF7A1A;
+    --morado: #7B4DFF;
+    --gris: #5F5F5F;
+    --sans: "Archivo", "Helvetica Neue", Arial, sans-serif;
+    --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+    color-scheme: light;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0; background: var(--fondo); color: var(--tinta);
+    font-family: var(--sans); font-stretch: 100%; font-size: 1.0625rem; line-height: 1.55;
+    overflow-x: hidden;
+  }
+  :focus-visible { outline: 3px solid var(--azul); outline-offset: 3px; }
+  a { color: inherit; }
+
+  /* =========================================
+     KEYFRAMES & ANIMACIONES BASE
+     ========================================= */
+  @keyframes slideDownNav {
+    0% { transform: translateY(-120%) scale(0.95); opacity: 0; }
+    100% { transform: translateY(0) scale(1); opacity: 1; }
+  }
+
+  @keyframes revealText {
+    0% { transform: translateY(115%) rotate(3deg); opacity: 0; }
+    100% { transform: translateY(0) rotate(0deg); opacity: 1; }
+  }
+
+  @keyframes fadeUp {
+    0% { transform: translateY(30px); opacity: 0; }
+    100% { transform: translateY(0); opacity: 1; }
+  }
+
+  @keyframes floatSheet {
+    0%, 100% { translate: 0 0px; }
+    50% { translate: 0 -16px; }
+  }
+
+  @keyframes drawStroke {
+    to { stroke-dashoffset: 0; }
+  }
+
+  @keyframes spinStar {
+    0% { transform: rotate(0deg) scale(0.9); }
+    50% { transform: rotate(180deg) scale(1.1); }
+    100% { transform: rotate(360deg) scale(0.9); }
+  }
+
+  @keyframes pulseGlow {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(255, 210, 31, 0.6); }
+    70% { box-shadow: 0 0 0 14px rgba(255, 210, 31, 0); }
+  }
+
+  /* =========================================
+     BARRA FLOTANTE TIPO PÍLDORA
+     ========================================= */
+  .barra {
+    position: sticky; top: 0.8rem; z-index: 10;
+    width: min(1100px, calc(100% - 2rem)); margin: 0.8rem auto 0;
+    display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+    background: rgba(255, 255, 255, 0.88);
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    border-radius: 999px; padding: 0.55rem 0.6rem 0.55rem 0.9rem;
+    box-shadow: 0 6px 24px rgba(20, 20, 20, 0.08);
+    animation: slideDownNav 0.9s var(--ease-out-expo) both;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+  }
+  .barra:hover {
+    box-shadow: 0 10px 32px rgba(20, 20, 20, 0.13);
+  }
+  .marca { display: flex; align-items: center; gap: 0.6rem; text-decoration: none; }
+  .sello {
+    width: 40px; height: 40px; background: var(--tinta); color: #fff; border-radius: 8px;
+    display: grid; place-items: center; font-stretch: 125%; font-weight: 900; font-size: 0.95rem;
+    transition: transform 0.4s var(--ease-spring), background-color 0.3s ease;
+  }
+  .marca:hover .sello {
+    transform: rotate(-10deg) scale(1.08);
+    background: var(--azul);
+  }
+  .marca b { font-stretch: 125%; font-weight: 800; font-size: 1.05rem; display: block; line-height: 1.1; }
+  .marca small { color: var(--gris); font-size: 0.8rem; }
+  .barra nav { display: flex; align-items: center; gap: 0.4rem; }
+  .barra nav a {
+    text-decoration: none; padding: 0.55rem 0.9rem; border-radius: 999px; font-weight: 600;
+    transition: background-color 0.25s ease, transform 0.25s var(--ease-spring), color 0.25s ease;
+  }
+  .barra nav a:hover { background: #EFEFEB; transform: translateY(-2px); }
+  .barra nav a.resaltado { background: #EFEFEB; }
+  .barra .contacto { background: var(--tinta); color: #fff; padding-right: 0.9rem; }
+  .barra .contacto:hover { background: var(--azul); color: #fff; transform: translateY(-2px) scale(1.03); }
+
+  /* =========================================
+     PORTADA & PARALLAX
+     ========================================= */
+  .portada {
+    position: relative; min-height: 80vh;
+    display: grid; place-items: center; padding: 4rem 1rem 3rem;
+  }
+  .titulo {
+    position: relative; z-index: 2; margin: 0; text-align: center;
+    font-stretch: 125%; font-weight: 900; font-size: clamp(3rem, 11vw, 9.5rem);
+    line-height: 0.9; letter-spacing: -0.02em;
+  }
+  /* Máscara para el efecto de aparición del título */
+  .titulo .mask {
+    display: block; overflow: hidden; padding-bottom: 0.08em;
+  }
+  .titulo .lola {
+    display: block;
+    animation: revealText 1s var(--ease-out-expo) both;
+    transition: font-stretch 0.4s var(--ease-out-expo), color 0.3s ease;
+    cursor: default;
+  }
+  .titulo .mask:nth-child(1) .lola { animation-delay: 0.15s; }
+  .titulo .mask:nth-child(2) .lola { animation-delay: 0.28s; }
+  /* Efecto interactivo de fuente variable al pasar el mouse */
+  .titulo:hover .lola { font-stretch: 112%; }
+  .titulo .lola:hover { color: var(--azul); font-stretch: 125%; }
+
+  /* SVG Trazos animados */
+  .trazos { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
+  .trazos path.linea {
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+    animation: drawStroke 1.8s var(--ease-out-expo) forwards;
+  }
+  .trazos path.l1 { animation-delay: 0.4s; }
+  .trazos path.l2 { animation-delay: 0.6s; }
+  .trazos path.l3 { animation-delay: 0.75s; }
+  .trazos path.l4 { animation-delay: 0.9s; }
+  .trazos .estrella-1 {
+    transform-origin: 480px 84px;
+    animation: spinStar 14s linear infinite;
+  }
+  .trazos .estrella-2 {
+    transform-origin: 348px 448px;
+    animation: spinStar 18s linear infinite reverse;
+  }
+
+  .bajada {
+    position: relative; z-index: 2; text-align: center; margin: -1rem auto 0; max-width: 34ch;
+    font-size: 1.15rem; color: var(--gris);
+    animation: fadeUp 0.9s var(--ease-out-expo) 0.55s both;
+  }
+
+  /* Hojas dispersas con flotación + Parallax */
+  .hojas { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+  .hoja {
+    position: absolute; width: clamp(110px, 16vw, 210px); aspect-ratio: 4 / 3;
+    border-radius: 6px; box-shadow: 0 18px 40px rgba(20, 20, 20, 0.14);
+    padding: 14px; display: flex; flex-direction: column; gap: 8px; justify-content: center;
+    animation: floatSheet 6s ease-in-out infinite;
+    transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+    will-change: transform, translate;
+  }
+  .hoja i {
+    display: block; height: 8px; border-radius: 4px; background: currentColor; opacity: 0.35;
+    transform-origin: left;
+    transition: transform 0.4s ease;
+  }
+  .hoja.h1 { top: 8%; left: 6%; transform: rotate(-9deg); background: #fff; color: var(--tinta); animation-delay: 0s; }
+  .hoja.h2 { top: 6%; right: 8%; transform: rotate(7deg); background: var(--azul); color: #fff; animation-duration: 7s; animation-delay: -1.5s; }
+  .hoja.h3 { bottom: 10%; left: 10%; transform: rotate(4deg); background: var(--amarillo); color: var(--tinta); animation-duration: 5.5s; animation-delay: -3s; }
+  .hoja.h4 { bottom: 8%; right: 9%; transform: rotate(-6deg); background: var(--naranja); color: #fff; animation-duration: 6.5s; animation-delay: -2s; }
+
+  /* =========================================
+     SCROLL REVEAL UTILITY CLASSES
+     ========================================= */
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px) scale(0.98);
+    transition: opacity 0.85s var(--ease-out-expo), transform 0.85s var(--ease-out-expo);
+    will-change: opacity, transform;
+  }
+  .reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+  /* =========================================
+     FRASE GRANDE (MANIFIESTO)
+     ========================================= */
+  .manifiesto {
+    padding: clamp(3.5rem, 8vw, 6rem) clamp(1.2rem, 5vw, 3rem);
+    max-width: 1100px; margin: 0 auto;
+  }
+  .manifiesto p {
+    font-stretch: 112%; font-weight: 800; font-size: clamp(1.8rem, 4.6vw, 3.4rem);
+    line-height: 1.08; letter-spacing: -0.015em; margin: 0;
+  }
+  /* Subrayado marcador animado al hacer scroll */
+  .manifiesto mark {
+    background: linear-gradient(transparent 58%, var(--amarillo) 58%);
+    background-repeat: no-repeat;
+    background-size: 0% 100%;
+    color: inherit; padding: 0 0.1em;
+    transition: background-size 1s var(--ease-out-expo) 0.35s;
+  }
+  .manifiesto.is-visible mark {
+    background-size: 100% 100%;
+  }
+
+  /* =========================================
+     SERVICIOS EN TARJETAS GRANDES
+     ========================================= */
+  .servicios {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem;
+    max-width: 1100px; margin: 0 auto; padding: 0 clamp(1.2rem, 5vw, 3rem) clamp(3rem, 7vw, 5rem);
+  }
+  .servicio {
+    position: relative; overflow: hidden;
+    border-radius: 22px; padding: clamp(1.4rem, 3vw, 2rem); min-height: 230px;
+    display: flex; flex-direction: column; justify-content: space-between;
+    transition: transform 0.45s var(--ease-spring), box-shadow 0.45s var(--ease-out-expo), opacity 0.8s var(--ease-out-expo);
+    cursor: pointer;
+  }
+  /* Escalonado de entrada para las tarjetas */
+  .servicio:nth-child(1) { transition-delay: 0.05s; }
+  .servicio:nth-child(2) { transition-delay: 0.15s; }
+  .servicio:nth-child(3) { transition-delay: 0.25s; }
+  .servicio:nth-child(4) { transition-delay: 0.35s; }
+
+  .servicio.is-visible:hover {
+    transform: translateY(-8px) scale(1.015);
+    box-shadow: 0 22px 44px rgba(20, 20, 20, 0.14);
+    transition-delay: 0s;
+  }
+  .servicio h2 {
+    font-stretch: 118%; font-weight: 800; font-size: clamp(1.5rem, 3vw, 2rem); line-height: 1.05; margin: 0 0 0.6rem;
+    transition: font-stretch 0.35s var(--ease-out-expo), transform 0.35s var(--ease-out-expo);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  /* Flecha interactiva que aparece en hover */
+  .servicio h2::after {
+    content: "↗";
+    font-size: 1.4rem;
+    opacity: 0;
+    transform: translate(-12px, 12px);
+    transition: opacity 0.35s var(--ease-out-expo), transform 0.35s var(--ease-spring);
+  }
+  .servicio:hover h2 {
+    font-stretch: 125%;
+  }
+  .servicio:hover h2::after {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+  .servicio p {
+    margin: 0; max-width: 34ch;
+    transition: transform 0.35s var(--ease-out-expo);
+  }
+  .servicio:hover p {
+    transform: translateX(4px);
+  }
+  .servicio.s1 { background: var(--amarillo); }
+  .servicio.s2 { background: var(--azul); color: #fff; }
+  .servicio.s3 { background: var(--tinta); color: #fff; }
+  .servicio.s4 { background: #EFE9DC; }
+
+  /* =========================================
+     PRECIOS INTERACTIVOS
+     ========================================= */
+  .precios { max-width: 1100px; margin: 0 auto; padding: 0 clamp(1.2rem, 5vw, 3rem) clamp(3rem, 7vw, 5rem); }
+  .precios h2 { font-stretch: 118%; font-weight: 800; font-size: clamp(1.8rem, 4vw, 2.6rem); margin: 0 0 1.4rem; }
+  .fila {
+    position: relative;
+    display: flex; justify-content: space-between; align-items: baseline; gap: 1rem;
+    padding: 1.2rem 0.8rem; border-top: 2px solid var(--tinta); font-size: 1.1rem;
+    border-radius: 8px;
+    transition: padding 0.35s var(--ease-out-expo), background-color 0.3s ease;
+    cursor: default;
+  }
+  .fila:last-child { border-bottom: 2px solid var(--tinta); }
+  .fila span {
+    transition: transform 0.35s var(--ease-out-expo), font-weight 0.2s ease;
+  }
+  .fila strong {
+    font-stretch: 118%; font-weight: 800; font-size: 1.5rem; white-space: nowrap;
+    padding: 0.15rem 0.6rem; border-radius: 999px;
+    transition: transform 0.35s var(--ease-spring), background-color 0.3s ease, color 0.3s ease;
+  }
+  .fila:hover {
+    background-color: rgba(20, 20, 20, 0.04);
+    padding-left: 1.4rem;
+    padding-right: 1.4rem;
+  }
+  .fila:hover span {
+    transform: translateX(4px);
+    font-weight: 700;
+  }
+  .fila:hover strong {
+    background-color: var(--amarillo);
+    color: var(--tinta);
+    transform: scale(1.1) rotate(-3deg);
+  }
+
+  /* =========================================
+     VISITA (CTA BANNER)
+     ========================================= */
+  .visita {
+    background: var(--morado); color: #fff; border-radius: 28px;
+    max-width: 1100px; margin: 0 auto clamp(3rem, 7vw, 5rem); padding: clamp(2rem, 5vw, 3.5rem);
+    display: grid; grid-template-columns: 1.2fr 1fr; gap: 2rem; align-items: end;
+    position: relative; overflow: hidden;
+    transition: transform 0.5s var(--ease-out-expo), box-shadow 0.5s var(--ease-out-expo), opacity 0.8s var(--ease-out-expo);
+  }
+  .visita:hover {
+    box-shadow: 0 24px 50px rgba(123, 77, 255, 0.28);
+  }
+  .visita h2 { font-stretch: 118%; font-weight: 900; font-size: clamp(2rem, 4.8vw, 3.4rem); line-height: 1; margin: 0; }
+  .visita dl { margin: 0 0 1.5rem; }
+  .visita dt { font-weight: 700; opacity: 0.85; font-size: 0.95rem; }
+  .visita dd { margin: 0 0 1rem; font-weight: 600; font-size: 1.05rem; }
+  .boton {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: var(--amarillo); color: var(--tinta);
+    text-decoration: none; font-weight: 800; padding: 0.95rem 1.6rem; border-radius: 999px;
+    animation: pulseGlow 2.5s infinite;
+    transition: transform 0.35s var(--ease-spring), background-color 0.25s ease;
+  }
+  .boton::after {
+    content: "→";
+    display: inline-block;
+    transition: transform 0.3s var(--ease-spring);
+  }
+  .boton:hover {
+    background: #fff;
+    transform: translateY(-3px) scale(1.04);
+    animation: none;
+  }
+  .boton:hover::after {
+    transform: translateX(5px);
+  }
+
+  footer {
+    max-width: 1100px; margin: 0 auto; padding: 0 clamp(1.2rem, 5vw, 3rem) 2rem;
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; font-size: 0.9rem; color: var(--gris);
+  }
+
+  @media (max-width: 800px) {
+    .barra nav a:not(.contacto) { display: none; }
+    .servicios, .visita { grid-template-columns: 1fr; }
+    .hoja { width: 90px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+    .reveal { opacity: 1 !important; transform: none !important; }
+    .manifiesto mark { background-size: 100% 100% !important; }
+  }
+</style>
+</head>
+<body>
+
+<header class="barra">
+  <a class="marca" href="#inicio">
+    <span class="sello" aria-hidden="true">IL</span>
+    <span><b>Impresiones Lola</b><small>Útiles e impresiones</small></span>
+  </a>
+  <nav aria-label="Principal">
+    <a href="#servicios" class="resaltado">Servicios</a>
+    <a href="#precios">Precios</a>
+    <a href="#visita" class="contacto">Visítanos</a>
+  </nav>
+</header>
+
+<main id="inicio">
+  <section class="portada" aria-label="Portada">
+    <div class="hojas" aria-hidden="true">
+      <div class="hoja h1" data-speed="0.04" data-rot="-9"><i></i><i style="width:70%"></i><i style="width:85%"></i></div>
+      <div class="hoja h2" data-speed="-0.05" data-rot="7"><i></i><i style="width:60%"></i></div>
+      <div class="hoja h3" data-speed="0.06" data-rot="4"><i style="width:50%"></i><i></i></div>
+      <div class="hoja h4" data-speed="-0.04" data-rot="-6"><i></i><i style="width:75%"></i><i style="width:40%"></i></div>
+    </div>
+
+    <svg class="trazos" viewBox="0 0 1000 500" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+      <path class="linea l1" d="M190 330 C 260 300, 340 300, 420 300" fill="none" stroke="#FFD21F" stroke-width="14" stroke-linecap="round"/>
+      <path class="linea l2" d="M390 90 C 300 90, 260 210, 330 300 C 380 360, 440 350, 430 290" fill="none" stroke="#2D5BFF" stroke-width="10" stroke-linecap="round"/>
+      <path class="linea l3" d="M620 140 C 700 60, 760 130, 720 200 C 690 250, 670 280, 690 320" fill="none" stroke="#FF7A1A" stroke-width="9" stroke-linecap="round"/>
+      <path class="linea l4" d="M660 320 C 700 340, 760 330, 800 320" fill="none" stroke="#FFD21F" stroke-width="10" stroke-linecap="round"/>
+      <g fill="#7B4DFF">
+        <path class="estrella-1" d="M480 60 l10 18 l20 -6 l-10 18 l10 18 l-20 -6 l-10 18 l-10 -18 l-20 6 l10 -18 l-10 -18 l20 6 z"/>
+        <path class="estrella-2" d="M340 430 l8 14 l16 -5 l-8 14 l8 14 l-16 -5 l-8 14 l-8 -14 l-16 5 l8 -14 l-8 -14 l16 5 z"/>
+      </g>
+    </svg>
+
+    <h1 class="titulo">
+      <span class="mask"><span class="lola">Impresiones</span></span>
+      <span class="mask"><span class="lola">Lola</span></span>
+    </h1>
+  </section>
+  <p class="bajada">Librería de útiles, impresiones A4, fotocopias y escaneos en Villa El Salvador.</p>
+
+  <section class="manifiesto reveal" aria-label="Manifiesto">
+    <p>Imprimimos lo que necesitas <mark>hoy mismo</mark>, sin complicaciones ni letra chica.</p>
+  </section>
+
+  <section class="servicios" id="servicios" aria-label="Servicios">
+    <article class="servicio s1 reveal"><h2>Impresiones A4</h2><p>En blanco y negro o a color, desde tu USB, tu correo o tu celular.</p></article>
+    <article class="servicio s2 reveal"><h2>Fotocopias</h2><p>Copias en blanco y negro para clases, trámites y documentos del día a día.</p></article>
+    <article class="servicio s3 reveal"><h2>Escaneos</h2><p>Digitalizamos tus papeles y te los enviamos por correo o WhatsApp.</p></article>
+    <article class="servicio s4 reveal"><h2>Útiles</h2><p>Cuadernos, cartulinas, colores, papel y folders para el colegio y la oficina.</p></article>
+  </section>
+
+  <section class="precios reveal" id="precios" aria-label="Precios">
+    <h2>Precios por unidad</h2>
+    <div class="fila"><span>Fotocopia A4 blanco y negro</span><strong>S/ 0.10</strong></div>
+    <div class="fila"><span>Impresión A4 a color</span><strong>S/ 0.50</strong></div>
+    <div class="fila"><span>Escaneo de documento</span><strong>S/ 1.00</strong></div>
+  </section>
+
+  <section class="visita reveal" id="visita" aria-label="Visítanos">
+    <div>
+      <h2>Pasa por la tienda o escríbenos.</h2>
+    </div>
+    <div>
+      <dl>
+        <dt>Dirección</dt>
+        <dd>Mz H lote 20, sector 2, grupo 23A, Villa El Salvador, Perú</dd>
+        <dt>WhatsApp</dt>
+        <dd>+51 959 064 309</dd>
+      </dl>
+      <a class="boton" href="https://wa.me/51959064309">Escribir por WhatsApp</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <span>© 2026 Impresiones Lola</span>
+  <span>Precios referenciales en soles (S/).</span>
+</footer>
+
+<script>
+  // 1. Intersection Observer para revelar secciones al hacer scroll
+  const observerOptions = {
+    threshold: 0.18,
+    rootMargin: "0px 0px -40px 0px"
+  };
+
+  const revealObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, observerOptions);
+
+  document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+  // 2. Efecto Parallax interactivo con el mouse en la portada para las hojas
+  const portada = document.querySelector('.portada');
+  const hojas = document.querySelectorAll('.hoja');
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (!prefersReducedMotion && portada) {
+    portada.addEventListener('mousemove', (e) => {
+      const { innerWidth, innerHeight } = window;
+      const xAxis = (e.clientX - innerWidth / 2);
+      const yAxis = (e.clientY - innerHeight / 2);
+
+      hojas.forEach(hoja => {
+        const speed = parseFloat(hoja.dataset.speed) || 0.04;
+        const baseRot = parseFloat(hoja.dataset.rot) || 0;
+        const moveX = xAxis * speed;
+        const moveY = yAxis * speed;
+        const extraRot = (xAxis * speed) * 0.25;
+        hoja.style.transform = `translate3d(${moveX}px, ${moveY}px, 0) rotate(${baseRot + extraRot}deg)`;
+      });
+    });
+
+    portada.addEventListener('mouseleave', () => {
+      hojas.forEach(hoja => {
+        const baseRot = parseFloat(hoja.dataset.rot) || 0;
+        hoja.style.transform = `translate3d(0px, 0px, 0) rotate(${baseRot}deg)`;
+      });
+    });
+  }
+</script>
+
+</body>
+</html>
