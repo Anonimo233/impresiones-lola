@@ -1,0 +1,29 @@
+{
+  "aviso": "",
+  "bajada": "Librería de útiles, impresiones A4, fotocopias y escaneos en Villa El Salvador.",
+  "direccion": "Mz H lote 20, sector 2, grupo 23A, Villa El Salvador, Perú",
+  "wsNumero": "51959064309",
+  "wsTexto": "+51 959 064 309",
+  "precios": [
+    {
+      "nombre": "Impresión A4 blanco y negro",
+      "precio": "S/ 0.50"
+    },
+    {
+      "nombre": "Impresión A4 a color",
+      "precio": "S/ 1.00"
+    },
+    {
+      "nombre": "Fotocopia A4 blanco y negro",
+      "precio": "S/ 0.20"
+    },
+    {
+      "nombre": "Fotocopia A4 a color",
+      "precio": "S/ 0.40"
+    },
+    {
+      "nombre": "Escaneo de documento",
+      "precio": "S/ 1.00"
+    }
+  ]
+}
