@@ -217,7 +217,7 @@
   }
 
   /* =========================================
-     SERVICIOS EN TARJETAS GRANDES
+     SERVICIOS EN TARJETAS GRANDES CLICABLES
      ========================================= */
   .servicios {
     display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem;
@@ -225,6 +225,7 @@
   }
   .servicio {
     position: relative; overflow: hidden;
+    text-decoration: none;
     border-radius: 22px; padding: clamp(1.4rem, 3vw, 2rem); min-height: 230px;
     display: flex; flex-direction: column; justify-content: space-between;
     transition: transform 0.45s var(--ease-spring), box-shadow 0.45s var(--ease-out-expo), opacity 0.8s var(--ease-out-expo);
@@ -240,6 +241,9 @@
     box-shadow: 0 22px 44px rgba(20, 20, 20, 0.14);
     transition-delay: 0s;
   }
+  .servicio.is-visible:active {
+    transform: translateY(-2px) scale(0.99);
+  }
   .servicio h2 {
     font-stretch: 118%; font-weight: 800; font-size: clamp(1.5rem, 3vw, 2rem); line-height: 1.05; margin: 0 0 0.6rem;
     transition: font-stretch 0.35s var(--ease-out-expo), transform 0.35s var(--ease-out-expo);
@@ -248,8 +252,8 @@
   .servicio h2::after {
     content: "↗";
     font-size: 1.4rem;
-    opacity: 0;
-    transform: translate(-12px, 12px);
+    opacity: 0.35;
+    transform: translate(-6px, 6px);
     transition: opacity 0.35s var(--ease-out-expo), transform 0.35s var(--ease-spring);
   }
   .servicio:hover h2 {
@@ -257,7 +261,7 @@
   }
   .servicio:hover h2::after {
     opacity: 1;
-    transform: translate(0, 0);
+    transform: translate(0, 0) scale(1.15);
   }
   .servicio p {
     margin: 0; max-width: 34ch;
@@ -414,10 +418,22 @@
   </section>
 
   <section class="servicios" id="servicios" aria-label="Servicios">
-    <article class="servicio s1 reveal"><h2>Impresiones A4</h2><p>En blanco y negro o a color, desde tu USB, tu correo o tu celular.</p></article>
-    <article class="servicio s2 reveal"><h2>Fotocopias</h2><p>Copias en blanco y negro o a color para clases, trámites y documentos del día a día.</p></article>
-    <article class="servicio s3 reveal"><h2>Escaneos</h2><p>Digitalizamos tus papeles y te los enviamos por correo o WhatsApp.</p></article>
-    <article class="servicio s4 reveal"><h2>Útiles</h2><p>Cuadernos, cartulinas, colores, papel y folders para el colegio y la oficina.</p></article>
+    <a class="servicio s1 reveal" href="https://wa.me/51959064309?text=%C2%A1Hola%20Impresiones%20Lola!%20Quiero%20enviar%20un%20archivo%20para%20imprimir%20en%20A4." target="_blank" rel="noopener">
+      <h2>Impresiones A4</h2>
+      <p>En blanco y negro o a color, desde tu USB, tu correo o tu celular.</p>
+    </a>
+    <a class="servicio s2 reveal" href="https://wa.me/51959064309?text=%C2%A1Hola%20Impresiones%20Lola!%20Quiero%20consultar%20por%20el%20servicio%20de%20fotocopias." target="_blank" rel="noopener">
+      <h2>Fotocopias</h2>
+      <p>Copias en blanco y negro o a color para clases, trámites y documentos del día a día.</p>
+    </a>
+    <a class="servicio s3 reveal" href="https://wa.me/51959064309?text=%C2%A1Hola%20Impresiones%20Lola!%20Necesito%20realizar%20un%20escaneo%20de%20documentos." target="_blank" rel="noopener">
+      <h2>Escaneos</h2>
+      <p>Digitalizamos tus papeles y te los enviamos por correo o WhatsApp.</p>
+    </a>
+    <a class="servicio s4 reveal" href="https://wa.me/51959064309?text=%C2%A1Hola%20Impresiones%20Lola!%20Quiero%20consultar%20si%20tienen%20disponibles%20estos%20%C3%BAtiles%3A" target="_blank" rel="noopener">
+      <h2>Útiles</h2>
+      <p>Cuadernos, cartulinas, colores, papel y folders para el colegio y la oficina.</p>
+    </a>
   </section>
 
   <section class="precios reveal" id="precios" aria-label="Precios">
@@ -440,7 +456,7 @@
         <dt>WhatsApp</dt>
         <dd>+51 959 064 309</dd>
       </dl>
-      <a class="boton" href="https://wa.me/51959064309">Escribir por WhatsApp</a>
+      <a class="boton" href="https://wa.me/51959064309" target="_blank" rel="noopener">Escribir por WhatsApp</a>
     </div>
   </section>
 </main>
@@ -494,10 +510,6 @@
       });
     });
   }
-</script>
-
-</body>
-</html>
 </script>
 
 </body>
