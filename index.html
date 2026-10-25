@@ -120,7 +120,6 @@
     font-stretch: 125%; font-weight: 900; font-size: clamp(3rem, 11vw, 9.5rem);
     line-height: 0.9; letter-spacing: -0.02em;
   }
-  /* Máscara para el efecto de aparición del título */
   .titulo .mask {
     display: block; overflow: hidden; padding-bottom: 0.08em;
   }
@@ -132,7 +131,6 @@
   }
   .titulo .mask:nth-child(1) .lola { animation-delay: 0.15s; }
   .titulo .mask:nth-child(2) .lola { animation-delay: 0.28s; }
-  /* Efecto interactivo de fuente variable al pasar el mouse */
   .titulo:hover .lola { font-stretch: 112%; }
   .titulo .lola:hover { color: var(--azul); font-stretch: 125%; }
 
@@ -207,7 +205,6 @@
     font-stretch: 112%; font-weight: 800; font-size: clamp(1.8rem, 4.6vw, 3.4rem);
     line-height: 1.08; letter-spacing: -0.015em; margin: 0;
   }
-  /* Subrayado marcador animado al hacer scroll */
   .manifiesto mark {
     background: linear-gradient(transparent 58%, var(--amarillo) 58%);
     background-repeat: no-repeat;
@@ -233,7 +230,6 @@
     transition: transform 0.45s var(--ease-spring), box-shadow 0.45s var(--ease-out-expo), opacity 0.8s var(--ease-out-expo);
     cursor: pointer;
   }
-  /* Escalonado de entrada para las tarjetas */
   .servicio:nth-child(1) { transition-delay: 0.05s; }
   .servicio:nth-child(2) { transition-delay: 0.15s; }
   .servicio:nth-child(3) { transition-delay: 0.25s; }
@@ -249,7 +245,6 @@
     transition: font-stretch 0.35s var(--ease-out-expo), transform 0.35s var(--ease-out-expo);
     display: flex; align-items: center; justify-content: space-between;
   }
-  /* Flecha interactiva que aparece en hover */
   .servicio h2::after {
     content: "↗";
     font-size: 1.4rem;
@@ -420,15 +415,17 @@
 
   <section class="servicios" id="servicios" aria-label="Servicios">
     <article class="servicio s1 reveal"><h2>Impresiones A4</h2><p>En blanco y negro o a color, desde tu USB, tu correo o tu celular.</p></article>
-    <article class="servicio s2 reveal"><h2>Fotocopias</h2><p>Copias en blanco y negro para clases, trámites y documentos del día a día.</p></article>
+    <article class="servicio s2 reveal"><h2>Fotocopias</h2><p>Copias en blanco y negro o a color para clases, trámites y documentos del día a día.</p></article>
     <article class="servicio s3 reveal"><h2>Escaneos</h2><p>Digitalizamos tus papeles y te los enviamos por correo o WhatsApp.</p></article>
     <article class="servicio s4 reveal"><h2>Útiles</h2><p>Cuadernos, cartulinas, colores, papel y folders para el colegio y la oficina.</p></article>
   </section>
 
   <section class="precios reveal" id="precios" aria-label="Precios">
     <h2>Precios por unidad</h2>
-    <div class="fila"><span>Fotocopia A4 blanco y negro</span><strong>S/ 0.10</strong></div>
-    <div class="fila"><span>Impresión A4 a color</span><strong>S/ 0.50</strong></div>
+    <div class="fila"><span>Impresión A4 blanco y negro</span><strong>S/ 0.50</strong></div>
+    <div class="fila"><span>Impresión A4 a color</span><strong>S/ 1.00</strong></div>
+    <div class="fila"><span>Fotocopia A4 blanco y negro</span><strong>S/ 0.20</strong></div>
+    <div class="fila"><span>Fotocopia A4 a color</span><strong>S/ 0.40</strong></div>
     <div class="fila"><span>Escaneo de documento</span><strong>S/ 1.00</strong></div>
   </section>
 
@@ -454,7 +451,6 @@
 </footer>
 
 <script>
-  // 1. Intersection Observer para revelar secciones al hacer scroll
   const observerOptions = {
     threshold: 0.18,
     rootMargin: "0px 0px -40px 0px"
@@ -471,7 +467,6 @@
 
   document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
-  // 2. Efecto Parallax interactivo con el mouse en la portada para las hojas
   const portada = document.querySelector('.portada');
   const hojas = document.querySelectorAll('.hoja');
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -499,6 +494,10 @@
       });
     });
   }
+</script>
+
+</body>
+</html>
 </script>
 
 </body>
