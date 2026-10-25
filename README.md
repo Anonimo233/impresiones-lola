@@ -51,4 +51,4 @@ Sitio web moderno, rápido e interactivo para **Impresiones Lola**, librería de
 
 ### ❤️ Dedicatoria
 
-Hecho a pulso y con todo el cariño del mundo por un nieto orgulloso que ama muchísimo a su abuela Lola. ¡Que sigan los éxitos en la tienda!
+Hecho a pulso y con todo el cariño del mundo por un nieto orgulloso que ama muchísimo a su abuela Juana. ¡Que sigan los éxitos en la tienda!
